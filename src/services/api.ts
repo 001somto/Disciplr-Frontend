@@ -26,7 +26,7 @@ export interface ApiVault {
   milestones: ApiMilestone[]; activity?: ApiActivity[];
 }
 
-export interface ApiActivity { id: string; type: string; vaultId: string; amount: string; status: string; hash: string; memo: string; createdAt: string }
+export interface ApiActivity { id: string; type: string; vaultId: string; amount: string; fee?: string | number; status: string; hash: string; memo: string; createdAt: string }
 
 import { useConnectivityStore } from "./connectivity";
 
@@ -268,6 +268,7 @@ const toTx = (a: ApiActivity): VaultTransaction => ({
   timestamp: a.createdAt,
   amount: Number(a.amount),
   rawAmount: a.amount,
+  ...(a.fee != null ? { fee: Number(a.fee) } : {}),
 });
 
 export function toVault(v: ApiVault): Vault {
