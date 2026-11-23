@@ -510,6 +510,7 @@ const toTx = (a: ApiActivity): VaultTransaction => ({
   type: normalizeActivityType(a.type),
   hash: a.hash,
   timestamp: a.createdAt,
+  rawAmount: a.amount,
   amount: parseFiniteAmount(a.amount, 0),
 });
 
@@ -530,6 +531,7 @@ export function toVault(v: ApiVault): Vault {
   return {
     id: v.id,
     name: v.name || `Vault ${v.id}`,
+    rawAmount: v.amount,
     status,
     amount: parseFiniteAmount(v.amount, 0),
     currency: "USDC",
